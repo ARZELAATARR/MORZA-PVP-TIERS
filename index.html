@@ -1,0 +1,711 @@
+<div id="curtain-left"></div>
+<div id="curtain-right"></div>
+<div id="redflash"></div>
+
+<style>
+body{
+    margin:0;
+    background:black;
+    overflow-x:hidden;
+}
+
+/* Flash merah pas buka */
+#redflash{
+    position:fixed;
+    inset:0;
+    background:red;
+    z-index:9998;
+    animation:redFade 1s forwards;
+}
+
+@keyframes redFade{
+    0%{
+        opacity:1;
+    }
+    100%{
+        opacity:0;
+        visibility:hidden;
+    }
+}
+
+/* Korden */
+#curtain-left,
+#curtain-right{
+    position:fixed;
+    top:0;
+    width:50%;
+    height:100%;
+    background:linear-gradient(to bottom,#000000,#220000);
+    z-index:9999;
+    transition:transform 1.8s ease;
+    box-shadow:0 0 30px red;
+}
+
+#curtain-left{
+    left:0;
+    border-right:3px solid red;
+}
+
+#curtain-right{
+    right:0;
+    border-left:3px solid red;
+}
+
+/* Animasi buka */
+.open-left{
+    transform:translateX(-100%);
+}
+
+.open-right{
+    transform:translateX(100%);
+}
+</style>
+
+<script>
+window.onload = () => {
+
+    setTimeout(() => {
+
+        document
+            .getElementById("curtain-left")
+            .classList.add("open-left");
+
+        document
+            .getElementById("curtain-right")
+            .classList.add("open-right");
+
+    }, 500);
+
+};
+</script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Morza TierList</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    background:
+    linear-gradient(
+        180deg,
+        #070707,
+        #140000,
+        #080808
+    );
+
+    font-family:Arial, sans-serif;
+    color:white;
+
+    padding:20px;
+}
+
+/* TITLE */
+
+.title{
+    text-align:center;
+    margin-bottom:30px;
+}
+
+.title h1{
+    font-size:42px;
+    color:#ff2b2b;
+
+    text-shadow:
+    0 0 20px red;
+}
+
+.title p{
+    color:#999;
+    margin-top:5px;
+}
+
+/* CARD */
+
+.card{
+
+    background:
+    linear-gradient(
+        145deg,
+        rgba(20,0,0,0.95),
+        rgba(5,5,5,0.95)
+    );
+
+    border:1px solid rgba(255,0,0,0.3);
+
+    border-radius:25px;
+
+    margin-bottom:22px;
+
+    overflow:hidden;
+
+    box-shadow:
+    0 0 20px rgba(255,0,0,0.15);
+}
+
+/* TOP */
+
+.top{
+    display:flex;
+    align-items:center;
+
+    padding:18px;
+}
+
+/* RANK BOX */
+
+.rank-box{
+
+    width:130px;
+    height:80px;
+
+    clip-path:polygon(
+        0 0,
+        100% 0,
+        85% 100%,
+        0 100%
+    );
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    font-size:48px;
+    font-weight:bold;
+
+    color:white;
+
+    text-shadow:
+    0 0 10px black;
+}
+
+/* COLORS */
+
+.gold{
+    background:
+    linear-gradient(
+        90deg,
+        #ffb300,
+        #ffdf6b
+    );
+}
+
+.silver{
+    background:
+    linear-gradient(
+        90deg,
+        #9aa5ad,
+        #d9e2e8
+    );
+}
+
+.bronze{
+    background:
+    linear-gradient(
+        90deg,
+        #c66a24,
+        #ffb173
+    );
+}
+
+.dark{
+    background:
+    linear-gradient(
+        90deg,
+        #161d2a,
+        #2d3647
+    );
+}
+
+/* AVATAR */
+
+.avatar{
+
+    width:85px;
+    height:85px;
+
+    margin-left:-20px;
+
+    border-radius:12px;
+
+    border:2px solid rgba(255,0,0,0.5);
+
+    box-shadow:
+    0 0 15px rgba(255,0,0,0.5);
+}
+
+/* INFO */
+
+.info{
+    margin-left:18px;
+    flex:1;
+}
+
+.name{
+    font-size:28px;
+    font-weight:bold;
+}
+
+.role{
+    color:#bbb;
+    margin-top:5px;
+}
+
+/* REGION */
+
+.region{
+
+    padding:12px 16px;
+
+    border-radius:14px;
+
+    font-weight:bold;
+
+    font-size:28px;
+}
+
+.na{
+    background:#5b1720;
+    color:#ff7c91;
+}
+
+.eu{
+    background:#12391b;
+    color:#79ff91;
+}
+
+/* TIERS */
+
+.tiers{
+    padding:0 18px 18px 18px;
+}
+
+.tiers-title{
+    color:#888;
+    margin-bottom:12px;
+    font-weight:bold;
+}
+
+/* ICONS */
+
+.icons{
+    display:flex;
+    flex-wrap:wrap;
+    gap:12px;
+}
+
+/* TIER ITEM */
+
+.item{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+}
+
+/* ICON */
+
+.icon{
+
+    width:52px;
+    height:52px;
+
+    border-radius:50%;
+
+    background:#0f1118;
+
+    border:2px solid rgba(255,0,0,0.15);
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    font-size:24px;
+
+    box-shadow:
+    0 0 10px rgba(255,0,0,0.1);
+}
+
+/* LABEL */
+
+.label{
+
+    margin-top:6px;
+
+    padding:5px 10px;
+
+    border-radius:10px;
+
+    font-size:13px;
+    font-weight:bold;
+}
+
+.orange{
+    background:#6b3d1e;
+    color:#ffb06f;
+}
+
+.yellow{
+    background:#544213;
+    color:#ffd75e;
+}
+
+.gray{
+    background:#30384a;
+    color:#c6d0e3;
+}
+
+/* MOBILE */
+
+@media(max-width:700px){
+
+    .top{
+        flex-wrap:wrap;
+    }
+
+    .region{
+        margin-top:15px;
+    }
+
+    .name{
+        font-size:22px;
+    }
+
+    .rank-box{
+        width:100px;
+        height:70px;
+        font-size:38px;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="title">
+    <h1>Morza TierList</h1>
+    <p>Top 5 Players Ranked by Points</p>
+</div>
+
+<!-- TOP 1 -->
+
+<div class="card">
+
+    <div class="top">
+
+        <div class="rank-box gold">
+            1.
+        </div>
+
+        <img
+        class="avatar"
+        src="https://mc-heads.net/avatar/51DarkWizard">
+
+        <div class="info">
+
+            <div class="name">
+                ScytheYuki
+            </div>
+
+            <div class="role">
+                Combat Master • 300 Points
+            </div>
+
+        </div>
+
+        <div class="region na">
+            ID
+        </div>
+
+    </div>
+
+    <div class="tiers">
+
+        <div class="tiers-title">
+            TIERS
+        </div>
+
+        <div class="icons">
+
+            <div class="item">
+                <div class="label yellow">SWORD</div>
+            </div>
+
+            <div class="item">
+                <div class="label yellow">MACE</div>
+            </div>
+
+            <div class="item">
+                <div class="label yellow">UHC</div>
+            </div>
+
+            <div class="item">
+                <div class="label yellow">POT</div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- TOP 2 -->
+
+<div class="card">
+
+    <div class="top">
+
+        <div class="rank-box silver">
+            2.
+        </div>
+
+        <img
+        class="avatar"
+        src="https://mc-heads.net/avatar/T4rra">
+
+        <div class="info">
+
+            <div class="name">
+                TARRA
+            </div>
+
+            <div class="role">
+                Combat Master • 246 Points
+            </div>
+
+        </div>
+
+        <div class="region na">
+            ID
+        </div>
+
+    </div>
+
+    <div class="tiers">
+
+        <div class="tiers-title">
+            TIERS
+        </div>
+
+        <div class="icons">
+
+            <div class="item">
+                <div class="label yellow">MACE</div>
+            </div>
+
+            <div class="item">
+                <div class="label yellow">SWORD</div>
+            </div>
+
+            <div class="item">
+                <div class="label orange">CART</div>
+            </div>
+
+            <div class="item">
+                <div class="label yellow">UHC</div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- TOP 3 -->
+
+<div class="card">
+
+    <div class="top">
+
+        <div class="rank-box bronze">
+            3.
+        </div>
+
+        <img
+        class="avatar"
+        src="https://mc-heads.net/avatar/ItsMeTarrr">
+
+        <div class="info">
+
+            <div class="name">
+                TrueS4phire
+            </div>
+
+            <div class="role">
+                Combat Master • 236 Points
+            </div>
+
+        </div>
+
+        <div class="region na">
+            ID
+        </div>
+
+    </div>
+
+    <div class="tiers">
+
+        <div class="tiers-title">
+            TIERS
+        </div>
+
+        <div class="icons">
+
+            <div class="item">
+                <div class="label orange">SWORD</div>
+            </div>
+
+            <div class="item">
+                <div class="label orange">AXE</div>
+            </div>
+
+            <div class="item">
+                <div class="label yellow">CRYSTAL</div>
+            </div>
+
+            <div class="item">
+                <div class="label yellow">CART</div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- TOP 4 -->
+
+<div class="card">
+
+    <div class="top">
+
+        <div class="rank-box dark">
+            4.
+        </div>
+
+        <img
+        class="avatar"
+        src="https://mc-heads.net/avatar/swight">
+
+        <div class="info">
+
+            <div class="name">
+                VansMc
+            </div>
+
+            <div class="role">
+                Combat Master • 220 Points
+            </div>
+
+        </div>
+
+        <div class="region na">
+            ID
+        </div>
+
+    </div>
+
+    <div class="tiers">
+
+        <div class="tiers-title">
+            TIERS
+        </div>
+
+        <div class="icons">
+
+            <div class="item">
+                <div class="label orange">CRYSTAL</div>
+            </div>
+
+            <div class="item">
+                <div class="label gray">AXE</div>
+            </div>
+
+            <div class="item">
+                <div class="label yellow">POT</div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- TOP 5 -->
+
+<div class="card">
+
+    <div class="top">
+
+        <div class="rank-box dark">
+            5.
+        </div>
+
+        <img
+        class="avatar"
+        src="https://mc-heads.net/avatar/morza_mokeL">
+
+        <div class="info">
+
+            <div class="name">
+                MorzaMc
+            </div>
+
+            <div class="role">
+                Combat Ace • 188 Points
+            </div>
+
+        </div>
+
+        <div class="region na">
+            ID
+        </div>
+
+    </div>
+
+    <div class="tiers">
+
+        <div class="tiers-title">
+            TIERS
+        </div>
+
+        <div class="icons">
+
+            <div class="item">
+                <div class="label gray">AXE</div>
+            </div>
+
+            <div class="item">
+                <div class="label orange">CRYSTAL</div>
+            </div>
+
+            <div class="item">
+                <div class="label orange">SWORD</div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>
+<div class="title">
+    <h1>Morza TierList</h1>
+    <p>Top 5 Players Ranked by Points</p>
+
+    <div class="madeby">
+        Made by TrueS4phire
+    </div>
+</div>
